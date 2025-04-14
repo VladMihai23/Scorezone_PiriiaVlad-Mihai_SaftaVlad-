@@ -1,0 +1,2 @@
+
+ALTER TABLE matches ADD COLUMN status VARCHAR(50);

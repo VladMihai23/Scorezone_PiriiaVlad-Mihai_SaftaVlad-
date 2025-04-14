@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Live Matches</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <h1 class="mb-0">Live Matches</h1>
+            <span class="badge bg-danger rounded-pill">LIVE</span>
+        </div>
+
+        <div class="row g-3 mb-5" th:if="${not #lists.isEmpty(liveMatches)}">
+            <div class="col-md-6 col-lg-4" th:each="match : ${liveMatches}">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0" th:text="${match.league}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 th:text="${match.homeTeam}"></h6>
+                            <span class="badge bg-dark fs-5 mx-2"
+                                  th:text="${match.homeScore} + '-' + ${match.awayScore}"></span>
+                            <h6 th:text="${match.awayTeam}"></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted" th:text="${match.time}"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <h2>Upcoming Matches</h2>
+        </div>
+        <div class="row g-3 mb-5" th:if="${not #lists.isEmpty(upcomingMatches)}">
+            <div class="col-md-6 col-lg-4" th:each="match : ${upcomingMatches}">
+                <div class="card h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0" th:text="${match.league}"></h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 th:text="${match.homeTeam} + ' vs ' + ${match.awayTeam}"></h6>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted" th:text="${match.time}"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <h2>Finished Matches</h2>
+        </div>
+        <div class="row g-3 mb-5" th:if="${not #lists.isEmpty(finishedMatches)}">
+            <div class="col-md-6 col-lg-4" th:each="match : ${finishedMatches}">
+                <div class="card h-100">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="card-title mb-0" th:text="${match.league}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 th:text="${match.homeTeam}"></h6>
+                            <span class="badge bg-dark fs-5 mx-2"
+                                  th:text="${match.homeScore} + '-' + ${match.awayScore}"></span>
+                            <h6 th:text="${match.awayTeam}"></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted" th:text="${match.time}"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
