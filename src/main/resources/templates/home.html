@@ -4,12 +4,22 @@
       layout:decorate="~{layout}">
 
 <head>
-    <title>Home</title>
+    <title>Home - Football news</title>
 </head>
 
 <body>
 <div layout:fragment="content">
-    <h1>Sports News</h1>
+
+    <h2 class="mt-5">Football News</h2>
+
+
+    <ul>
+        <li th:each="article : ${articles}">
+            <a th:href="${article['url']}" th:text="${article['title']}">News Title</a>
+        </li>
+    </ul>
+
+
 </div>
 </body>
 </html>
