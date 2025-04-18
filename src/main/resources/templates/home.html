@@ -8,14 +8,29 @@
 </head>
 
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="container mt-5">
 
-    <h2 class="mt-5">Football News</h2>
+    <h2 class="mb-4">Football News</h2>
 
 
-    <ul>
-        <li th:each="article : ${articles}">
-            <a th:href="${article['url']}" th:text="${article['title']}">News Title</a>
+    <ul class="list-group">
+        <li th:each="article : ${articles}" class="list-group-item mb-3">
+
+            <h5>
+                <a th:href="${article['url']}" th:text="${article['title']}" target="_blank"
+                   class="text-decoration-none text-primary"></a>
+            </h5>
+
+            <p th:if="${article['description'] != null}" th:text="${article['description']}" class="mb-1 text-muted"></p>
+
+            <small th:if="${article['source'] != null}" class="text-secondary">
+                Source: <span th:text="${article['source']}"></span>
+            </small>
+
+            <div th:if="${article['image'] != null}" class="mt-2">
+                <img th:src="${article['image']}" alt="Article Image" class="img-fluid rounded" style="max-height: 200px;">
+            </div>
+
         </li>
     </ul>
 
