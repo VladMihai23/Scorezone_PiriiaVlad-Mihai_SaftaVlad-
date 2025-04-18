@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Match Events</title>
+</head>
+
+<body class="bg-light">
+<div layout:fragment="content">
+    <div class="container mt-5">
+        <h2>Match's Events</h2>
+
+        <div th:if="${#lists.isEmpty(events)}">
+            <div class="alert alert-warning">No events for this match.</div>
+        </div>
+
+        <ul class="list-group" th:if="${not #lists.isEmpty(events)}">
+            <li th:each="event : ${events}" class="list-group-item">
+
+                <span th:if="${event.get('time') != null and event.get('time').get('elapsed') != null}"
+                      th:text="|${event.get('time').get('elapsed').asText()}|">–</span>
+
+                <span th:if="${event.get('team') != null}"
+                      th:text="${event.get('team').get('name').asText()}">Team</span>
+
+                <span th:if="${event.get('player') != null}"
+                      th:text="' - ' + ${event.get('player').get('name').asText()}">Player</span>
+
+                <span th:if="${event.get('assist') != null and event.get('assist').get('name') != null}"
+                      class="text-muted">
+                    (Assist: <span th:text="${event.get('assist').get('name').asText()}">Another player</span>)
+                </span>
+
+                <span class="badge bg-secondary ms-2"
+                      th:if="${event.get('type') != null}"
+                      th:text="${event.get('type').asText()}">Type</span>
+
+                <small class="text-muted ms-1"
+                       th:if="${event.get('detail') != null}"
+                       th:text="'(' + ${event.get('detail').asText()} + ')'">Details</small>
+
+            </li>
+        </ul>
+
+        <div class="mt-4">
+            <a href="/live" class="btn btn-outline-primary">← Back to Games</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
