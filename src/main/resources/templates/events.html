@@ -22,6 +22,21 @@
                 <span th:if="${event.get('time') != null and event.get('time').get('elapsed') != null}"
                       th:text="|${event.get('time').get('elapsed').asText()}|">–</span>
 
+                <div th:if="${event.get('type').asText() == 'subst'}">
+                    <strong th:text="${event.get('team').get('name').asText()}">Team</strong> –
+                    <span class="text-danger" th:text="${event.get('player').get('name').asText()}">Player Out</span>
+                    <span> ⟶ </span>
+                    <span class="text-success fw-bold" th:text="${event.get('assist').get('name').asText()}">Player In</span>
+                    <span class="badge bg-secondary ms-2">Substitution</span>
+                </div>
+
+
+                <div th:if="${event.get('detail').asText() == 'Injury'}">
+                    <strong th:text="${event.get('team').get('name').asText()}">Team</strong> –
+                    <span th:text="${event.get('player').get('name').asText()}">Injured Player</span>
+                    <span class="badge bg-warning ms-2">Injury</span>
+                </div>
+
                 <span th:if="${event.get('team') != null}"
                       th:text="${event.get('team').get('name').asText()}">Team</span>
 
