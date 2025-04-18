@@ -40,4 +40,13 @@ public class LiveMatchController {
         return "live";
     }
 
+    @GetMapping("/match/{fixtureId}/events")
+    public String showMatchEvents(@org.springframework.web.bind.annotation.PathVariable Long fixtureId, Model model) {
+        var events = liveMatchService.fetchMatchEvents(fixtureId);
+        System.out.println("EVENTS: " + events.size());
+        model.addAttribute("events", events);
+        return "events";
+    }
+
+
 }

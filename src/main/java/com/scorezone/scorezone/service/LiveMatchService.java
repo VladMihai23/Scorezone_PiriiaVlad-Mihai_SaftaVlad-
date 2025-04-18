@@ -42,6 +42,21 @@ public class LiveMatchService {
         return fetchMatches(url);
     }
 
+    public JsonNode fetchMatchEvents(Long fixtureId){
+        String url = "https://v3.football.api-sports.io/fixtures/events?fixture=" + fixtureId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-apisports-key", apiToken);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        try{
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            return objectMapper.readTree(response.getBody()).path("response");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return objectMapper.createArrayNode();
+        }
+    }
 
     public List<Match> fetchUpcomingMatches() {
         String today = LocalDate.now().toString();
