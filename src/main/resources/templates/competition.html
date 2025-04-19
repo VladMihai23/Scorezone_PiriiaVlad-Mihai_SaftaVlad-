@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Competitions</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">All Competitions</h2>
+
+        <form class="d-flex" th:action="@{/competitions/search}" method="get">
+            <input class="form-control me-2" type="text" name="query" placeholder="Search by name">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div th:if="${#lists.isEmpty(competitions)}">
+        <div class="alert alert-warning">No competitions found.</div>
+    </div>
+
+    <div class="row g-3" th:if="${not #lists.isEmpty(competitions)}">
+        <div class="col-md-6 col-lg-4" th:each="league : ${competitions}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${league.get('league').get('name').asText()}">League Name</h5>
+                    <p class="card-text">
+                        Country: <span th:text="${league.get('country').get('name').asText()}">Country</span><br/>
+                        Type: <span th:text="${league.get('league').get('type').asText()}">League Type</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
