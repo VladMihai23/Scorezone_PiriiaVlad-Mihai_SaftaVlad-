@@ -17,10 +17,15 @@
     <div th:each="entry : ${teamsByLeague}">
         <h3 class="mt-4" th:text="${entry.key}">League Name</h3>
         <ul class="list-group">
-            <li th:each="team : ${entry.value}" class="list-group-item">
-                <img th:src="@{${team.get('team').get('logo').asText()}}" alt="Logo" width="20" height="20">
-                <span th:text="${team.get('team').get('name').asText()}">Team Name</span>
+            <li th:each="team : ${entry.value}" class="list-group-item d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <span class="me-2" th:text="${team.get('rank').asText()}">#1</span>
+                    <img th:src="@{${team.get('team').get('logo').asText()}}" alt="Logo" width="20" height="20" class="me-2">
+                    <span th:text="${team.get('team').get('name').asText()}">Team Name</span>
+                </div>
+                <span th:text="${team.get('points').asText()} + ' pts'">99 pts</span>
             </li>
+
         </ul>
     </div>
 
