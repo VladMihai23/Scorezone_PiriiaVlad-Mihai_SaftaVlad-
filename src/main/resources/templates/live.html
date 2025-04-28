@@ -7,6 +7,10 @@
     <title>Live Matches</title>
 </head>
 
+<style>
+
+</style>
+
 <body>
 <div layout:fragment="content">
     <div class="container mt-4">
@@ -18,7 +22,7 @@
 
         <div class="row g-3 mb-5" th:if="${not #lists.isEmpty(liveMatches)}">
             <div class="col-md-6 col-lg-4" th:each="match : ${liveMatches}">
-                <div class="card h-100">
+                <div class="card h-100 inflatable-card">
                     <div class="card-header bg-primary text-white">
                         <h5 class="card-title mb-0" th:text="${match.league}"></h5>
                     </div>

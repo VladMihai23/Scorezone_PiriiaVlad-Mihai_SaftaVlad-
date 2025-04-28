@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Top Leagues</title>
+</head>
+
+
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <h2>Teams by League</h2>
+
+    <div th:each="entry : ${teamsByLeague}">
+        <h3 class="mt-4" th:text="${entry.key}">League Name</h3>
+        <ul class="list-group">
+            <li th:each="team : ${entry.value}" class="list-group-item">
+                <img th:src="@{${team.get('team').get('logo').asText()}}" alt="Logo" width="20" height="20">
+                <span th:text="${team.get('team').get('name').asText()}">Team Name</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
