@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Competition Statistics</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <h2>Competition Statistics</h2>
+
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>League</th>
+            <th>Total Matches</th>
+            <th>Total Goals</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stat : ${statistics}">
+            <td th:text="${stat['leagueName']}">League Name</td>
+            <td th:text="${stat['totalMatches']}">0</td>
+            <td th:text="${stat['totalGoals']}">0</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

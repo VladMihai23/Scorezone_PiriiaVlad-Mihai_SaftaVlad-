@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Team Statistics</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <h2>Team Performance Statistics</h2>
+
+    <table class="table table-bordered mt-4">
+        <tbody>
+        <tr>
+            <th>Matches Played</th>
+            <td th:text="${statistics['played']}">0</td>
+        </tr>
+        <tr>
+            <th>Wins</th>
+            <td th:text="${statistics['wins']}">0</td>
+        </tr>
+        <tr>
+            <th>Draws</th>
+            <td th:text="${statistics['draws']}">0</td>
+        </tr>
+        <tr>
+            <th>Losses</th>
+            <td th:text="${statistics['losses']}">0</td>
+        </tr>
+        <tr>
+            <th>Goals For</th>
+            <td th:text="${statistics['goalsFor']}">0</td>
+        </tr>
+        <tr>
+            <th>Goals Against</th>
+            <td th:text="${statistics['goalsAgainst']}">0</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
