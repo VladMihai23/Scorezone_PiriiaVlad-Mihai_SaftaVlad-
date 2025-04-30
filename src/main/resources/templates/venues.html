@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Venues</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h2>Stadiums</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Capacity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="venue : ${venues}">
+            <td th:text="${venue['name']}"></td>
+            <td th:text="${venue['city']}"></td>
+            <td th:text="${venue['capacity']}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
