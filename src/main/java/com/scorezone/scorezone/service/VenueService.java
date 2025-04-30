@@ -33,17 +33,21 @@ public class VenueService {
     @PostConstruct
     public void initAndSaveVenues() {
         List<Map<String, Object>> venuesFromApi = fetchAllVenuesFromApi();
+        int savedCount = 0;
+
         for (Map<String, Object> v : venuesFromApi) {
-            String name = (String) v.get("name");
-            if (venueRepository.findByName(name).isEmpty()) {
+            String name = ((String) v.get("name")).trim();
+            if (venueRepository.findByNameIgnoreCase(name).isEmpty()) {
                 Venue venue = new Venue();
                 venue.setName(name);
-                venue.setCity((String) v.get("city"));
+                venue.setCity(((String) v.get("city")).trim());
                 venue.setCapacity((Integer) v.get("capacity"));
                 venueRepository.save(venue);
+                savedCount++;
             }
         }
-        System.out.println("Saved venues to DB if not already present.");
+
+        System.out.println("Saved venues to DB if not already present. Total new venues: " + savedCount);
     }
 
     public List<Map<String, Object>> fetchAllVenuesFromApi() {
