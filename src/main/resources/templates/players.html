@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Top Leagues</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <h2>Team Players</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="player : ${players}">
+            <td th:text="${player.get('name')}"></td>
+            <td th:text="${player.get('position')}"></td>
+            <td>
+                <form th:action="@{/players/statistics}" method="get" class="d-flex gap-2">
+                    <input type="hidden" name="playerId" th:value="${player.get('id')}" />
+                    <button type="submit" class="btn btn-sm btn-primary">View Stats</button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>

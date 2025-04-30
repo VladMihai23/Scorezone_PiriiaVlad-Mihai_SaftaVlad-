@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Player Statistics</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h2 th:if="${playerStats != null}" th:text="${playerStats.path('player').path('name')}">Player Name</h2>
+
+    <div th:if="${playerStats != null}">
+        <p>Age: <span th:text="${playerStats.path('player').path('age')}">-</span></p>
+        <p>Nationality: <span th:text="${playerStats.path('player').path('nationality')}">-</span></p>
+
+        <h4>Statistics</h4>
+        <ul>
+            <li th:text="'Appearances: ' + ${playerStats.path('statistics').get(0).path('games').path('appearences')}"></li>
+            <li th:text="'Goals: ' + ${playerStats.path('statistics').get(0).path('goals').path('total')}"></li>
+            <li th:text="'Assists: ' + ${playerStats.path('statistics').get(0).path('goals').path('assists')}"></li>
+        </ul>
+    </div>
+
+    <div th:if="${errorMessage != null}">
+        <p class="alert alert-warning" th:text="${errorMessage}"></p>
+    </div>
+</div>
+
+</body>
+</html>

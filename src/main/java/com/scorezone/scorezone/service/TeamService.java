@@ -28,7 +28,6 @@ public class TeamService {
             "Ligue 1", 61
     );
 
-    // Reverse map: leagueId -> League Name
     private final Map<Integer, String> leagueNamesById = importantLeagues
             .entrySet()
             .stream()
@@ -44,7 +43,7 @@ public class TeamService {
         for (Map.Entry<String, Integer> entry : importantLeagues.entrySet()) {
             String leagueName = entry.getKey();
             Integer leagueId = entry.getValue();
-            String url = "https://v3.football.api-sports.io/standings?league=" + leagueId + "&season=2023";
+            String url = "https://v3.football.api-sports.io/standings?league=" + leagueId + "&season=2022";
 
             try {
                 ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
@@ -97,4 +96,64 @@ public class TeamService {
             return Collections.emptyMap();
         }
     }
+
+    public List<Map<String, Object>> fetchPlayersByTeam(int teamId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-apisports-key", apiToken);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "https://v3.football.api-sports.io/players?team=" + teamId + "&season=2022";
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            JsonNode root = objectMapper.readTree(response.getBody());
+            JsonNode responseArray = root.path("response");
+
+            List<Map<String, Object>> players = new ArrayList<>();
+
+            for (JsonNode entry : responseArray) {
+                JsonNode playerInfo = entry.path("player");
+                JsonNode stats = entry.path("statistics").isArray() && entry.path("statistics").size() > 0
+                        ? entry.path("statistics").get(0)
+                        : null;
+
+                Map<String, Object> player = new HashMap<>();
+
+                player.put("id", playerInfo.path("id").asInt());
+                player.put("name", playerInfo.path("name").asText());
+                player.put("position", stats != null ? stats.path("games").path("position").asText("-") : "-");
+                player.put("number", stats != null && !stats.path("games").path("number").isMissingNode()
+                        ? stats.path("games").path("number").asText()
+                        : "-");
+
+                players.add(player);
+            }
+
+            return players;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public JsonNode fetchPlayerStatistics(int playerId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-apisports-key", apiToken);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        String url = "https://v3.football.api-sports.io/players?id=" + playerId + "&season=2022";
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            JsonNode root = objectMapper.readTree(response.getBody());
+            return root.path("response").get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
 }

@@ -1,9 +1,11 @@
 package com.scorezone.scorezone.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.scorezone.scorezone.service.TeamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -31,4 +33,31 @@ public class TeamController {
         model.addAttribute("statistics", statistics);
         return "teamstatistics";
     }
+
+    @GetMapping("/teams/{teamId}/players")
+    public String showPlayers(@PathVariable int teamId, Model model) {
+        var players = teamService.fetchPlayersByTeam(teamId);
+        model.addAttribute("players", players);
+        return "players";
+    }
+
+    @GetMapping("/players/statistics")
+    public String showPlayerStatistics(@RequestParam("playerId") int playerId, Model model) {
+        JsonNode playerStats = teamService.fetchPlayerStatistics(playerId);
+        if (playerStats == null || playerStats.isEmpty()) {
+            model.addAttribute("errorMessage", "No statistics available for the selected player.");
+            return "playerstatistics";
+        }
+
+        model.addAttribute("playerStats", playerStats);
+        return "playerstatistics";
+    }
+
+
+
+
+
+
+
+
 }

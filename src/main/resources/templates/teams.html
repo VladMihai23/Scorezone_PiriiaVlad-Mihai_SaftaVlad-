@@ -28,6 +28,8 @@
                        th:href="@{/teams/statistics(team=${team.get('team').get('id').asText()} + '-' + ${team.get('league').get('id').asText()})}">
                         See Statistics
                     </a>
+                    <a th:href="@{'/teams/' + ${team.get('team').get('id').asText()} + '/players'}"
+                       class="btn btn-sm btn-secondary">View Players</a>
                 </div>
             </li>
         </ul>
