@@ -9,23 +9,52 @@
 
 <body>
 <div layout:fragment="content" class="container mt-5">
-    <h2>Stadiums</h2>
-    <table class="table">
+
+    <h2>All Venues</h2>
+    <table class="table table-bordered">
         <thead>
         <tr>
             <th>Name</th>
             <th>City</th>
             <th>Capacity</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="venue : ${venues}">
-            <td th:text="${venue['name']}"></td>
-            <td th:text="${venue['city']}"></td>
-            <td th:text="${venue['capacity']}"></td>
+        <tr th:each="venue : ${allVenues}">
+            <td th:text="${venue.name}">Name</td>
+            <td th:text="${venue.city}">City</td>
+            <td th:text="${venue.capacity}">Capacity</td>
+            <td>
+                <span th:if="${venue.editable}">
+                    <a th:href="@{'/venues/edit/' + ${venue.id}}" class="btn btn-sm btn-primary">Edit</a>
+                </span>
+                <span th:unless="${venue.editable}" class="text-muted">From API</span>
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <h2 class="mt-5">Add New Venue</h2>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <form th:action="@{/venues/save}" th:object="${venue}" method="post" class="mb-4">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-2">
+            <label for="name">Name</label>
+            <input type="text" id="name" class="form-control" th:field="*{name}" required />
+        </div>
+        <div class="mb-2">
+            <label for="city">City</label>
+            <input type="text" id="city" class="form-control" th:field="*{city}" required />
+        </div>
+        <div class="mb-2">
+            <label for="capacity">Capacity</label>
+            <input type="number" id="capacity" class="form-control" th:field="*{capacity}" required min="1" />
+        </div>
+        <button type="submit" class="btn btn-success">Save Venue</button>
+    </form>
+
 </div>
 </body>
 </html>

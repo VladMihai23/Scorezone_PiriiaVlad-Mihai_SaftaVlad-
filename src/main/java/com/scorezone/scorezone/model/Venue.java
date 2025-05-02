@@ -15,6 +15,7 @@ public class Venue {
     private String name;
     private String city;
     private int capacity;
+    private boolean editable;
 
     public Venue() {
 
@@ -49,6 +50,14 @@ public class Venue {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    public boolean getEditable() {
+        return editable;
+    }
+
 
 
 
