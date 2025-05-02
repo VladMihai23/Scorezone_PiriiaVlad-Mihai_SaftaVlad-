@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -50,12 +51,16 @@ public class VenueController {
     }
 
     @PostMapping("/venues/save")
-    public String saveVenue(@ModelAttribute("venue") Venue venue, Model model) {
+    public String saveVenue(@ModelAttribute("venue") Venue venue, RedirectAttributes redirectAttributes, Model model) {
         try {
             if (venue.getId() == null) {
                 venueService.addVenue(venue);
+                redirectAttributes.addFlashAttribute("success", "Venue added successfully!");
+
             } else {
                 venueService.updateVenue(venue.getId(), venue);
+                redirectAttributes.addFlashAttribute("success", "Venue updated successfully!");
+
             }
         } catch (IllegalArgumentException e) {
             model.addAttribute("venue", venue);
