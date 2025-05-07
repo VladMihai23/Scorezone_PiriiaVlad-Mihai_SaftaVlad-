@@ -53,11 +53,4 @@ public class TeamController {
         return "playerstatistics";
     }
 
-
-
-
-
-
-
-
 }

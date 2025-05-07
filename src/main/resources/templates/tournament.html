@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Tournaments</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <h2 class="mb-4">Tournaments</h2>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tournament : ${tournaments}">
+            <td th:text="${tournament.name}"></td>
+            <td th:text="${tournament.description}"></td>
+            <td th:text="${tournament.startDate}"></td>
+            <td th:text="${tournament.endDate}"></td>
+            <td>
+                <form th:action="@{/tournament/update}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${tournament.id}"/>
+                    <input type="text" class="form-control d-inline w-25 mb-2" name="name" th:value="${tournament.name}" required/>
+                    <input type="text" class="form-control d-inline w-25 mb-2" name="description" th:value="${tournament.description}" required/>
+                    <input type="date" class="form-control d-inline w-25 mb-2" name="startDate" th:value="${tournament.startDate}" required/>
+                    <input type="date" class="form-control d-inline w-25 mb-2" name="endDate" th:value="${tournament.endDate}" required/>
+                    <button type="submit" class="btn btn-sm btn-warning mt-1">Update</button>
+                </form>
+
+                <form th:action="@{/tournament/delete/{id}(id=${tournament.id})}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-danger mt-1" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr class="my-5"/>
+
+    <div class="card shadow p-4">
+        <h4 class="mb-3">Create New Tournament</h4>
+        <form th:action="@{/tournament}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Name:</label>
+                <input type="text" class="form-control" name="name" required/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Description:</label>
+                <input type="text" class="form-control" name="description" required/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Start Date:</label>
+                <input type="date" class="form-control" name="startDate" required/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">End Date:</label>
+                <input type="date" class="form-control" name="endDate" required/>
+            </div>
+
+            <button type="submit" class="btn btn-success">Create</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
