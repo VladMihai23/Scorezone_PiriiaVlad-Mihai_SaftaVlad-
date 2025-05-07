@@ -2,6 +2,9 @@ package com.scorezone.scorezone.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -22,6 +25,12 @@ public class User {
     @Column(name = "privacy_enabled", nullable = false)
     private boolean privacyEnabled = false;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private Set<String> roles = new HashSet<>();
+
+
     public User() {
     }
 
@@ -30,6 +39,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.privacyEnabled = privacyEnabled;
+        this.roles.add("ROLE_USER");
     }
 
     public Long getId() {
@@ -71,4 +81,12 @@ public class User {
     public void setPrivacyEnabled(boolean privacyEnabled) {
         this.privacyEnabled = privacyEnabled;
     }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
 }

@@ -5,6 +5,7 @@ import com.scorezone.scorezone.model.Tournament;
 import com.scorezone.scorezone.service.TournamentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class TournamentController {
         return "tournament";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public String createTournament(@ModelAttribute Tournament tournament) {
         tournamentService.saveTournament(tournament);
@@ -47,12 +49,14 @@ public class TournamentController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateTournament(@ModelAttribute Tournament tournament) {
         tournamentService.saveTournament(tournament);
         return "redirect:/tournament";
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteTournament(@PathVariable Long id) {
         tournamentService.deleteTournament(id);
         return "redirect:/tournament";

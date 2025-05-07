@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TournamentService {
@@ -25,10 +24,6 @@ public class TournamentService {
 
     public Tournament getTournamentById(Long id) {
         return tournamentRepository.findById(id).orElse(null);
-    }
-
-    public Optional<Tournament> getTournamentByName(Long id) {
-        return tournamentRepository.findById(id);
     }
 
     public Tournament saveTournament(Tournament tournament) {

@@ -3,6 +3,7 @@ package com.scorezone.scorezone.security;
 import com.scorezone.scorezone.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -21,8 +22,11 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return user.getRoles().stream()
+                .map(role -> (GrantedAuthority) () -> role)
+                .toList();
     }
+
 
     @Override
     public String getPassword() {

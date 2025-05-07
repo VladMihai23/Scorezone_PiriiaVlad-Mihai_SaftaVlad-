@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+
 <head>
     <title>Tournaments</title>
 </head>
@@ -26,7 +27,7 @@
             <td th:text="${tournament.description}"></td>
             <td th:text="${tournament.startDate}"></td>
             <td th:text="${tournament.endDate}"></td>
-            <td>
+            <td th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                 <form th:action="@{/tournament/update}" method="post" class="d-inline">
                     <input type="hidden" name="id" th:value="${tournament.id}"/>
                     <input type="text" class="form-control d-inline w-25 mb-2" name="name" th:value="${tournament.name}" required/>
@@ -46,7 +47,7 @@
 
     <hr class="my-5"/>
 
-    <div class="card shadow p-4">
+    <div class="card shadow p-4" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
         <h4 class="mb-3">Create New Tournament</h4>
         <form th:action="@{/tournament}" method="post">
             <div class="mb-3">
