@@ -1,0 +1,2 @@
+ALTER TABLE users
+    ADD COLUMN privacy_enabled BOOLEAN NOT NULL DEFAULT FALSE;

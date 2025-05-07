@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Profile</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+
+
+    <div class="card shadow-lg p-4 rounded">
+        <div class="d-flex align-items-center mb-4">
+            <div class="me-3">
+                <img src="https://via.placeholder.com/80" class="rounded-circle border" alt="Profile Picture">
+            </div>
+            <div>
+                <h3 class="mb-0" th:text="${user.name}">Name</h3>
+                <p class="text-muted mb-0" th:text="${user.email}">Email</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="mt-3">
+            <form th:action="@{/users/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+
+        <div class="mt-5">
+
+            <form th:action="@{/users/delete}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <button type="submit" class="btn btn-outline-danger mt-3">Delete Account</button>
+            </form>
+
+        </div>
+
+        <div class="mt-5">
+            <form th:action="@{/users/update}" method="post">
+                <input type="hidden" name="id" th:value="${user.id}" />
+
+                <div class="mb-3">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${user.name}" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+
+        <div class="mt-5">
+            <form th:action="@{/users/privacy}" method="post">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="privacyCheckbox" name="enabled"
+                           th:checked="${user.privacyEnabled}"/>
+                    <label class="form-check-label" for="privacyCheckbox">Enable Privacy Mode</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

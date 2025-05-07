@@ -36,6 +36,28 @@
                         <a class="nav-link text-light" th:href="@{/venues}">Venues</a>
                     </li>
                 </ul>
+
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item" th:href="@{/users/profile}">View Profile</a>
+                            </li>
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+
             </div>
         </div>
     </nav>
