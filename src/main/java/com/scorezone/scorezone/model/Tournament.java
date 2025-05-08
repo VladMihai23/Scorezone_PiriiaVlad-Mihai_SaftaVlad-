@@ -1,12 +1,11 @@
 package com.scorezone.scorezone.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Tournament {
@@ -22,6 +21,9 @@ public class Tournament {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Team> teams = new ArrayList<>();
 
     public Tournament() {}
 
@@ -56,8 +58,11 @@ public class Tournament {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-
-
-
+    public List<Team> getTeams() {
+        return teams;
+    }
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
 
 }

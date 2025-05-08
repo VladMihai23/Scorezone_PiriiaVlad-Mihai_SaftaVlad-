@@ -1,0 +1,24 @@
+
+
+
+ALTER TABLE player
+    ADD CONSTRAINT FK_PLAYER_ON_ID FOREIGN KEY (id) REFERENCES team (id);
+
+ALTER TABLE team
+    ADD CONSTRAINT FK_TEAM_ON_ID FOREIGN KEY (id) REFERENCES tournament (id);
+
+ALTER TABLE tournament_match
+    ADD CONSTRAINT FK_TOURNAMENTMATCH_ON_ID FOREIGN KEY (id) REFERENCES tournament (id);
+
+ALTER TABLE tournament_match
+    ADD CONSTRAINT FK_TOURNAMENTMATCH_ON_IDk10gtW FOREIGN KEY (id) REFERENCES venue (id);
+
+
+
+
+
+ALTER TABLE user_roles
+    ADD CONSTRAINT fk_user_roles_on_user FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE matches
+    ALTER COLUMN status TYPE VARCHAR(255) USING (status::VARCHAR(255));

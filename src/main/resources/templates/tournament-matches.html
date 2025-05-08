@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Tournament Teams</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+
+    <h2 th:text="'Teams in ' + ${tournament.name}" class="mb-4"></h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Team 1</th>
+            <th>Team 2</th>
+            <th>Score</th>
+            <th>Status</th>
+            <th th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="match : ${matches}">
+            <td th:text="${match.team1.name}"></td>
+            <td th:text="${match.team2.name}"></td>
+            <td th:text="${match.team1Score + ' - ' + match.team2Score}"></td>
+            <td th:text="${match.status}"></td>
+            <td th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                <form th:action="@{/tournament/match/update}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${match.id}" />
+                    <input type="number" name="team1Score" min="0" th:value="${match.team1Score}" class="form-control d-inline w-25" />
+                    <input type="number" name="team2Score" min="0" th:value="${match.team2Score}" class="form-control d-inline w-25" />
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+    <div class="card mt-4 p-4 shadow" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <h5>Add Match</h5>
+        <form th:action="@{/tournament/match/add}" method="post">
+            <input type="hidden" name="tournamentId" th:value="${tournament.id}" />
+
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="team1Id">Team 1</label>
+                    <select name="team1Id" class="form-select" id="team1Id" required>
+                        <option value="" disabled selected>Select Team 1</option>
+                        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                    </select>
+
+                </div>
+                <div class="col">
+                    <label for="team2Id">Team 2</label>
+                    <select name="team2Id" class="form-select" id="team2Id" required>
+                        <option value="" disabled selected>Select Team 2</option>
+                        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                    </select>
+
+                </div>
+                <div class="col">
+                    <label>Status</label>
+                    <input type="text" name="status" class="form-control" placeholder="Scheduled" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Add Match</button>
+        </form>
+        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+            <a th:href="@{/tournament-team/assign/{id}(id=${tournament.id})}" class="btn btn-primary">
+                Add / Manage Teams
+            </a>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

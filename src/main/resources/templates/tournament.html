@@ -27,19 +27,29 @@
             <td th:text="${tournament.description}"></td>
             <td th:text="${tournament.startDate}"></td>
             <td th:text="${tournament.endDate}"></td>
-            <td th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                <form th:action="@{/tournament/update}" method="post" class="d-inline">
-                    <input type="hidden" name="id" th:value="${tournament.id}"/>
-                    <input type="text" class="form-control d-inline w-25 mb-2" name="name" th:value="${tournament.name}" required/>
-                    <input type="text" class="form-control d-inline w-25 mb-2" name="description" th:value="${tournament.description}" required/>
-                    <input type="date" class="form-control d-inline w-25 mb-2" name="startDate" th:value="${tournament.startDate}" required/>
-                    <input type="date" class="form-control d-inline w-25 mb-2" name="endDate" th:value="${tournament.endDate}" required/>
-                    <button type="submit" class="btn btn-sm btn-warning mt-1">Update</button>
-                </form>
+            <td>
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <form th:action="@{/tournament/update}" method="post" class="d-inline">
+                        <input type="hidden" name="id" th:value="${tournament.id}"/>
+                        <input type="text" class="form-control d-inline w-25 mb-2" name="name"
+                               th:value="${tournament.name}" required/>
+                        <input type="text" class="form-control d-inline w-25 mb-2" name="description"
+                               th:value="${tournament.description}" required/>
+                        <input type="date" class="form-control d-inline w-25 mb-2" name="startDate"
+                               th:value="${tournament.startDate}" required/>
+                        <input type="date" class="form-control d-inline w-25 mb-2" name="endDate"
+                               th:value="${tournament.endDate}" required/>
+                        <button type="submit" class="btn btn-sm btn-warning mt-1">Update</button>
+                    </form>
 
-                <form th:action="@{/tournament/delete/{id}(id=${tournament.id})}" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-sm btn-danger mt-1" onclick="return confirm('Are you sure?')">Delete</button>
-                </form>
+                    <form th:action="@{/tournament/delete/{id}(id=${tournament.id})}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger mt-1"
+                                onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </div>
+
+                <a class="btn btn-sm btn-info mt-2"
+                   th:href="@{/tournament/{id}/teams(id=${tournament.id})}">See Teams</a>
             </td>
         </tr>
         </tbody>
